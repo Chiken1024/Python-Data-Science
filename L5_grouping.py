@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import numpy as np
+
 dataframe: pd.DataFrame = pd.read_csv("titanic.csv")
 
 groups = dataframe.groupby("Sex")
@@ -16,5 +18,7 @@ groups = dataframe.groupby("Sex")
 
 print(dataframe["Name"].str[::2])
 
-plt.scatter([1, 2, 3, 4, 5], [0.5, 1.0, 1.5, 2.0, 2.5])
+x = np.arange(-10, 10, 0.5)
+y = np.sin(x)
+plt.plot(x, y)
 plt.show()
