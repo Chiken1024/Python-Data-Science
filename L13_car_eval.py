@@ -4,16 +4,25 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from imblearn.over_sampling import SMOTE
+import seaborn
+import matplotlib.pyplot as plt
 
 
 car_data: pd.DataFrame = pd.read_csv("car_evaluation.csv")
 
 car_data.columns = ["buying", "maint", "doors", "persons", "lug_boot", "safety", "condition"]
 
+
+print(car_data["condition"].value_counts())
+
+
 encoder: LabelEncoder = LabelEncoder()
 
 for column in car_data.select_dtypes("str"):
   car_data[column] = encoder.fit_transform(car_data[column])
+
+
+print(car_data["condition"].value_counts())
 
 
 features: pd.DataFrame = car_data.drop(columns=["condition"])
@@ -40,3 +49,12 @@ print(
   classification_report(y_test, y_pred),
   confusion_matrix(y_test, y_pred)
 )
+
+
+
+
+mat = confusion_matrix(y_test, y_pred)
+
+seaborn.heatmap(mat, annot=True, xticklabels=["acc", "good", "unacc", "vgood"], yticklabels=["acc", "good", "unacc", "vgood"])
+
+plt.show()
